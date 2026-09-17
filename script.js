@@ -5,12 +5,12 @@ const portfolio = {
   linkedIn: "https://linkedin.com/in/kylepeng",
   resumeUrl: "assets/kyle-peng-resume.pdf",
   intro:
-    "I build AI workflows, data pipelines, and interactive systems that turn ambiguous problems into reliable software.",
-  location: "San Jose, CA",
+    "I build AI workflows, local agent systems, and data pipelines that turn ambiguous problems into reliable software.",
+  location: "San Ramon, CA",
   focus: "AI, data systems, full stack",
   availability: "M.Eng. CS @ Cornell",
   snapshot:
-    "I am pursuing a Master of Engineering in Computer Science at Cornell after completing my B.S. in Computer Science at Rose-Hulman, magna cum laude.",
+    "I am pursuing a Master of Engineering in Computer Science at Cornell, focused on systems for large-scale ML and semantic legal information systems, after completing my B.S. in Computer Science at Rose-Hulman, magna cum laude.",
   stats: [
     { value: "93%", label: "fund-classification accuracy across 87 categories at Supernova Technology" },
     { value: "63%", label: "improvement in dental hardware identification accuracy at LumaDent" },
@@ -52,20 +52,20 @@ const portfolio = {
       color: "#0f766e"
     },
     {
+      title: "HealBot - Dell x NVIDIA AI Hackathon",
+      category: "Agent systems",
+      summary: "A local SRE agent that detects, investigates, and remediates production incidents end-to-end while keeping inference and telemetry on-device.",
+      tags: ["FastAPI", "MongoDB", "NVIDIA"],
+      href: "https://github.com/hom-cv/hackathon-dell",
+      color: "#594b9a"
+    },
+    {
       title: "Phantom",
       category: "Security systems",
       summary: "A senior capstone system for ingesting, processing, and analyzing operational and security data for real-time monitoring.",
       tags: ["TypeScript", "Docker", "Distributed systems"],
       href: "#contact",
       color: "#c94c3f"
-    },
-    {
-      title: "Personalized Music Recommender",
-      category: "Machine learning",
-      summary: "A content-based recommendation engine using cosine similarity and vector embeddings to solve cold-start initialization problems.",
-      tags: ["Python", "scikit-learn", "Embeddings"],
-      href: "#contact",
-      color: "#594b9a"
     },
     {
       title: "Technical toolkit",
@@ -102,7 +102,7 @@ const portfolio = {
     {
       period: "2026-2027",
       title: "M.Eng. Computer Science, Cornell University",
-      detail: "Graduate study in computer science with an expected completion date of May 2027."
+      detail: "Graduate study in computer science with coursework in systems for large-scale ML and a semantic legal information systems project."
     },
     {
       period: "2022-2026",
@@ -120,6 +120,7 @@ const portfolio = {
 
 const qs = (selector, parent = document) => parent.querySelector(selector);
 const qsa = (selector, parent = document) => Array.from(parent.querySelectorAll(selector));
+let motionRuntime = null;
 
 function setText(selector, value) {
   const node = qs(selector);
@@ -246,8 +247,10 @@ function renderProjects(activeCategory = "All") {
 
   const grid = qs("[data-projects]");
   grid.innerHTML = visible
-    .map(
-      (project) => `
+    .map((project) => {
+      const isExternal = /^https?:\/\//.test(project.href);
+
+      return `
         <article class="project-card">
           <div class="project-swatch" style="--swatch: ${project.color}" aria-hidden="true"></div>
           <div class="project-card-body">
@@ -257,14 +260,17 @@ function renderProjects(activeCategory = "All") {
             </div>
             <h3>${project.title}</h3>
             <p>${project.summary}</p>
-            <a class="project-link" href="${project.href}">
+            <a class="project-link" href="${project.href}"${isExternal ? ' target="_blank" rel="noreferrer"' : ""}>
               ${project.href === "#contact" ? "Discuss project" : "Open project"}
             </a>
           </div>
         </article>
-      `
-    )
+      `;
+    })
     .join("");
+
+  animateProjectCards();
+  setupMotionFeedback();
 
   tabs.addEventListener(
     "click",
@@ -275,6 +281,109 @@ function renderProjects(activeCategory = "All") {
     },
     { once: true }
   );
+}
+
+function shouldReduceMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function motionStagger(interval) {
+  if (motionRuntime?.stagger) return motionRuntime.stagger(interval);
+  return (index) => index * interval;
+}
+
+function setupMotion() {
+  if (!window.Motion || shouldReduceMotion()) return;
+
+  const { animate, inView, stagger } = window.Motion;
+  if (!animate) return;
+
+  motionRuntime = { animate, inView, stagger };
+
+  animate(".site-header", { opacity: [0, 1], y: [-18, 0] }, { duration: 0.5, ease: "easeOut" });
+  const heroItems = [qs(".hero-main .eyebrow"), qs("#hero-title"), qs(".hero-copy"), qs(".hero-actions")].filter(
+    Boolean
+  );
+  const heroProofItems = [qs(".hero-proof"), ...qsa(".hero-meta div")].filter(Boolean);
+
+  animate(
+    heroItems,
+    { opacity: [0, 1], y: [22, 0], filter: ["blur(10px)", "blur(0px)"] },
+    { duration: 0.74, delay: motionStagger(0.08), ease: [0.16, 1, 0.3, 1] }
+  );
+  animate(
+    heroProofItems,
+    { opacity: [0, 1], y: [18, 0] },
+    { duration: 0.62, delay: motionStagger(0.09), ease: [0.16, 1, 0.3, 1] }
+  );
+
+  setupScrollReveals();
+  setupMotionFeedback();
+}
+
+function setupScrollReveals() {
+  const { animate, inView } = motionRuntime;
+  if (!inView) return;
+
+  const revealItems = qsa(
+    ".section-heading, .snapshot-text, .stat-item, .case-card, .skill-card, .timeline-item, .contact-panel"
+  );
+
+  revealItems.forEach((item) => {
+    item.style.opacity = "0";
+    item.style.transform = "translateY(22px)";
+    item.style.filter = "blur(8px)";
+  });
+
+  inView(
+    revealItems,
+    (item) => {
+      animate(
+        item,
+        { opacity: 1, y: 0, filter: "blur(0px)" },
+        { duration: 0.58, ease: [0.16, 1, 0.3, 1] }
+      );
+    },
+    { margin: "0px 0px -12% 0px", amount: 0.16 }
+  );
+}
+
+function animateProjectCards() {
+  if (!motionRuntime || shouldReduceMotion()) return;
+
+  const { animate } = motionRuntime;
+  const cards = qsa(".project-card");
+  cards.forEach((card) => {
+    card.style.opacity = "0";
+    card.style.transform = "translateY(16px)";
+  });
+
+  animate(
+    cards,
+    { opacity: 1, y: 0 },
+    { duration: 0.46, delay: motionStagger(0.045), ease: [0.16, 1, 0.3, 1] }
+  );
+}
+
+function setupMotionFeedback() {
+  if (!motionRuntime || shouldReduceMotion()) return;
+
+  const { animate } = motionRuntime;
+
+  qsa(".button, .project-link, .filter-tab").forEach((element) => {
+    if (element.dataset.motionFeedback === "true") return;
+    element.dataset.motionFeedback = "true";
+
+    element.addEventListener("pointerdown", () => {
+      animate(element, { scale: 0.98 }, { duration: 0.08 });
+    });
+    element.addEventListener("pointerup", () => {
+      animate(element, { scale: 1 }, { type: "spring", stiffness: 520, damping: 28 });
+    });
+    element.addEventListener("pointerleave", () => {
+      animate(element, { scale: 1 }, { duration: 0.12 });
+    });
+  });
 }
 
 function renderTimeline() {
@@ -429,4 +538,5 @@ function setupHeroCanvas() {
 applyContent();
 setupHeader();
 setupCopyEmail();
+setupMotion();
 setupHeroCanvas();

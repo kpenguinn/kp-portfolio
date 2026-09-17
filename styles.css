@@ -4,9 +4,11 @@
   --muted: #68605a;
   --paper: #f7f5f0;
   --surface: #fffdf8;
+  --surface-cool: #f1f6f4;
   --line: rgba(21, 17, 15, 0.15);
   --line-strong: rgba(21, 17, 15, 0.28);
   --teal: #0f766e;
+  --signal: #2d8ea3;
   --moss: #566b3f;
   --coral: #c94c3f;
   --gold: #b98216;
@@ -30,8 +32,11 @@ html {
 body {
   margin: 0;
   background:
-    linear-gradient(180deg, rgba(255, 253, 248, 0.78), rgba(247, 245, 240, 0.94)),
+    linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(247, 245, 240, 0.96)),
+    linear-gradient(90deg, rgba(15, 118, 110, 0.045) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(15, 118, 110, 0.035) 1px, transparent 1px),
     var(--paper);
+  background-size: auto, 42px 42px, 42px 42px, auto;
   color: var(--ink);
   font-size: 16px;
   line-height: 1.5;
@@ -104,6 +109,7 @@ textarea {
   place-items: center;
   border: 1px solid rgba(255, 253, 248, 0.55);
   border-radius: 50%;
+  background: rgba(15, 118, 110, 0.18);
   font-size: 0.9rem;
   font-weight: 800;
 }
@@ -159,9 +165,10 @@ textarea {
 .hero-overlay {
   z-index: -2;
   background:
-    radial-gradient(circle at 77% 22%, rgba(201, 76, 63, 0.4), transparent 26%),
-    radial-gradient(circle at 44% 78%, rgba(15, 118, 110, 0.3), transparent 29%),
-    linear-gradient(90deg, rgba(18, 14, 12, 0.96), rgba(18, 14, 12, 0.66) 52%, rgba(18, 14, 12, 0.34));
+    linear-gradient(90deg, rgba(18, 14, 12, 0.96), rgba(18, 14, 12, 0.7) 54%, rgba(18, 14, 12, 0.4)),
+    repeating-linear-gradient(90deg, rgba(255, 253, 248, 0.08) 0 1px, transparent 1px 72px),
+    repeating-linear-gradient(0deg, rgba(255, 253, 248, 0.06) 0 1px, transparent 1px 72px),
+    linear-gradient(135deg, rgba(15, 118, 110, 0.34), transparent 42%, rgba(201, 76, 63, 0.26));
 }
 
 .hero-content,
@@ -233,12 +240,15 @@ h3 {
 }
 
 .hero-proof {
-  border: 1px solid rgba(255, 253, 248, 0.24);
+  border: 1px solid rgba(255, 253, 248, 0.28);
   border-radius: var(--radius);
   background:
-    linear-gradient(180deg, rgba(255, 253, 248, 0.14), rgba(255, 253, 248, 0.06)),
-    rgba(21, 17, 15, 0.42);
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.24);
+    linear-gradient(180deg, rgba(255, 253, 248, 0.16), rgba(255, 253, 248, 0.07)),
+    linear-gradient(90deg, rgba(15, 118, 110, 0.18), transparent 36%),
+    rgba(21, 17, 15, 0.48);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 253, 248, 0.2);
   backdrop-filter: blur(18px);
 }
 
@@ -322,7 +332,8 @@ h3 {
 
 .button.primary {
   border-color: #fffdf8;
-  background: #fffdf8;
+  background:
+    linear-gradient(180deg, #fffdf8, #ece6dc);
   color: var(--ink);
 }
 
@@ -358,7 +369,13 @@ h3 {
 }
 
 .section-band {
-  background: var(--surface);
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(241, 246, 244, 0.78)),
+    var(--surface);
+}
+
+.intro-band {
+  border-bottom: 1px solid var(--line);
 }
 
 .section-inner,
@@ -399,12 +416,13 @@ h3 {
   grid-template-columns: 86px 1fr;
   gap: 18px;
   align-items: baseline;
-  border-top: 1px solid var(--line);
-  padding-top: 15px;
+  border-top: 1px solid rgba(15, 118, 110, 0.2);
+  padding: 15px 0 0 14px;
+  box-shadow: inset 2px 0 0 rgba(15, 118, 110, 0.16);
 }
 
 .stat-item strong {
-  color: var(--coral);
+  color: var(--teal);
   font-size: 1.45rem;
 }
 
@@ -434,7 +452,9 @@ h3 {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface);
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(255, 253, 248, 0.88)),
+    var(--surface);
 }
 
 .case-card {
@@ -462,15 +482,15 @@ h3 {
 
 .case-card:nth-child(1) .case-visual {
   background:
-    linear-gradient(135deg, rgba(15, 118, 110, 0.92), rgba(247, 245, 240, 0)),
-    repeating-linear-gradient(90deg, rgba(255, 253, 248, 0.24) 0 1px, transparent 1px 18px),
+    linear-gradient(135deg, rgba(15, 118, 110, 0.9), rgba(45, 142, 163, 0.12)),
+    repeating-linear-gradient(90deg, rgba(255, 253, 248, 0.22) 0 1px, transparent 1px 18px),
     #1f615c;
 }
 
 .case-card:nth-child(2) .case-visual {
   background:
-    radial-gradient(circle at 30% 28%, rgba(255, 253, 248, 0.82), transparent 16%),
-    linear-gradient(145deg, rgba(89, 75, 154, 0.92), rgba(185, 130, 22, 0.74)),
+    linear-gradient(145deg, rgba(89, 75, 154, 0.9), rgba(185, 130, 22, 0.76)),
+    repeating-linear-gradient(135deg, rgba(255, 253, 248, 0.18) 0 1px, transparent 1px 20px),
     #594b9a;
 }
 
@@ -518,8 +538,9 @@ h3 {
 
 .skills-band {
   background:
-    linear-gradient(rgba(21, 17, 15, 0.92), rgba(21, 17, 15, 0.92)),
-    repeating-linear-gradient(90deg, rgba(255, 253, 248, 0.08) 0 1px, transparent 1px 26px),
+    linear-gradient(rgba(21, 17, 15, 0.9), rgba(21, 17, 15, 0.92)),
+    repeating-linear-gradient(90deg, rgba(45, 142, 163, 0.16) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(0deg, rgba(255, 253, 248, 0.055) 0 1px, transparent 1px 28px),
     #15110f;
   color: var(--surface);
 }
@@ -570,7 +591,7 @@ h3 {
 .project-band {
   border-bottom: 1px solid var(--line);
   background:
-    linear-gradient(180deg, #fffdf8, #f2eee6);
+    linear-gradient(180deg, #fffdf8, var(--surface-cool));
 }
 
 .project-toolbar {
@@ -592,8 +613,8 @@ h3 {
 }
 
 .filter-tab[aria-selected="true"] {
-  border-color: var(--ink);
-  background: var(--ink);
+  border-color: var(--teal);
+  background: var(--teal);
   color: var(--surface);
 }
 
@@ -622,8 +643,9 @@ h3 {
 .project-swatch {
   border-bottom: 1px solid var(--line);
   background:
-    linear-gradient(135deg, rgba(255, 253, 248, 0.28), transparent 46%),
-    repeating-linear-gradient(90deg, rgba(255, 253, 248, 0.16) 0 1px, transparent 1px 18px),
+    linear-gradient(135deg, rgba(255, 253, 248, 0.34), transparent 48%),
+    repeating-linear-gradient(90deg, rgba(255, 253, 248, 0.18) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(0deg, rgba(255, 253, 248, 0.12) 0 1px, transparent 1px 18px),
     var(--swatch, var(--teal));
 }
 
@@ -689,8 +711,8 @@ h3 {
 .contact-section {
   padding: clamp(60px, 8vw, 108px) clamp(18px, 5vw, 58px);
   background:
-    linear-gradient(rgba(21, 17, 15, 0.78), rgba(21, 17, 15, 0.78)),
-    repeating-linear-gradient(135deg, rgba(255, 253, 248, 0.1) 0 1px, transparent 1px 16px),
+    linear-gradient(rgba(21, 17, 15, 0.8), rgba(21, 17, 15, 0.82)),
+    repeating-linear-gradient(135deg, rgba(45, 142, 163, 0.16) 0 1px, transparent 1px 18px),
     #15110f;
   color: var(--surface);
 }
