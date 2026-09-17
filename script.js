@@ -3,6 +3,7 @@ const portfolio = {
   role: "AI and software engineer",
   email: "pengkxyz@gmail.com",
   linkedIn: "https://linkedin.com/in/kylepeng",
+  github: "https://github.com/kpenguinn",
   resumeUrl: "assets/kyle-peng-resume.pdf",
   intro:
     "I build AI workflows, local agent systems, and data pipelines that turn ambiguous problems into reliable software.",
@@ -108,11 +109,6 @@ const portfolio = {
       period: "2022-2026",
       title: "B.S. Computer Science, Rose-Hulman Institute of Technology",
       detail: "Minors in mathematics and data science, magna cum laude, 3.71 cumulative GPA and 3.86 major GPA."
-    },
-    {
-      period: "2025-2026",
-      title: "AI, security, and recommendation systems",
-      detail: "Built agentic fund classification workflows, LLM benchmarking games, a threat-monitoring capstone, and a music recommender."
     }
   ],
   contactCopy: "Reach out for AI engineering, data systems, product engineering, or internship opportunities."
@@ -149,6 +145,12 @@ function applyContent() {
 
   qsa("[data-linkedin-link]").forEach((link) => {
     link.href = portfolio.linkedIn;
+    link.target = "_blank";
+    link.rel = "noreferrer";
+  });
+
+  qsa("[data-github-link]").forEach((link) => {
+    link.href = portfolio.github;
     link.target = "_blank";
     link.rel = "noreferrer";
   });
