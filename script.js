@@ -21,7 +21,7 @@ const portfolio = {
       type: "Innovation intern",
       title: "Agentic fund classification",
       summary:
-        "Built agentic AI workflows and automated ingestion pipelines to classify thousands of funds from unstructured regulatory compliance files.",
+        "Built LLM workflows and ingestion pipelines for unstructured compliance files.",
       outcome: "Reached 93% accuracy across 87 distinct categories.",
       tags: ["LLMs", "Prompt engineering", "Data pipelines"]
     },
@@ -29,7 +29,7 @@ const portfolio = {
       type: "AI intern",
       title: "Dental hardware segmentation",
       summary:
-        "Deployed a semantic segmentation workflow to classify third-party dental hardware and instantly match compatible mounting systems.",
+        "Automated dental hardware classification and mounting-system matching.",
       outcome: "Improved identification accuracy by 63%.",
       tags: ["Computer vision", "Landing.ai", "Automation"]
     },
@@ -37,7 +37,7 @@ const portfolio = {
       type: "Computer science intern",
       title: "Diagnostic image analysis",
       summary:
-        "Developed OpenCV image-processing algorithms and Python neural networks for automated COVID-19 test kit analysis.",
+        "Built image-processing and neural-network tools for COVID-19 test analysis.",
       outcome: "Reduced false positives in diagnostic result classification.",
       tags: ["OpenCV", "Python", "Neural networks"]
     }
